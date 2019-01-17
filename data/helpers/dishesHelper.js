@@ -1,7 +1,11 @@
 const db = require('../../config/dbConfig');
 
 module.exports = {
-  getDishes: () => db('dishes')
-    .then(list => list)
-    .catch(err => (err)),
+  getDishes: () => db('dishes'),
+
+  getDish: id => db('dishes')
+    .where({ id }),
+
+  addDish: dish => db('dishes')
+    .insert(dish),
 };
