@@ -3,6 +3,7 @@ exports.up = function (knex, Promise) {
     tbl.increments();
     tbl.string('name', 255).notNullable();
     tbl.unique('name', 'uq_ingredient_name');
+    tbl.foreign('id').references('ingredient_id').inTable('recipesIngredients');
   });
 };
 

@@ -6,6 +6,7 @@ exports.up = function (knex, Promise) {
     tbl.text('instructions');
     tbl.integer('dish_id').notNullable();
     tbl.foreign('dish_id').references('id').inTable('dishes');
+    tbl.foreign('id').references('recipe_id').inTable('recipesIngredients');
   });
 };
 
