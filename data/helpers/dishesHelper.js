@@ -9,5 +9,7 @@ module.exports = {
   addDish: dish => db('dishes')
     .insert(dish),
 
-  getRecipes: () => db('recipes'),
+  getRecipes: () => db('recipes')
+    .join('dishes', 'recipes.dish_id', 'dishes.id')
+    .select('recipes.name as recipe', 'dishes.name as dish'),
 };
