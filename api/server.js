@@ -65,4 +65,19 @@ server.get('/recipes', (req, res) => {
     });
 });
 
+server.post('/recipes', (req, res) => {
+  if (!req.body.name || !req.body.dish_id) {
+    res.status(400).json({ error: 'the recipe must have a name and a dish_id' });
+  } else {
+    console.log(req.body);
+    helper.addRecipe(req.body)
+      .then((id) => {
+        res.status(200).json(id);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: `there was an error adding the recipe: ${err}` });
+      });
+  }
+});
+
 module.exports = server;

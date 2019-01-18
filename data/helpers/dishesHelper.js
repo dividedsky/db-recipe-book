@@ -12,4 +12,6 @@ module.exports = {
   getRecipes: () => db('recipes')
     .join('dishes', 'recipes.dish_id', 'dishes.id')
     .select('recipes.name as recipe', 'dishes.name as dish'),
+
+  addRecipe: recipe => db('recipes').insert(recipe),
 };
