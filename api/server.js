@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../config/dbConfig');
 
-const dishHelper = require('../data/helpers/dishesHelper');
+const helper = require('../data/helpers/dishesHelper');
 
 const server = express();
 server.use(express.json());
@@ -11,7 +11,7 @@ server.get('/', (req, res) => {
 });
 
 server.get('/dishes', (req, res) => {
-  dishHelper.getDishes()
+  helper.getDishes()
     .then((dishes) => {
       res.status(200).json(dishes);
     })
@@ -21,7 +21,7 @@ server.get('/dishes', (req, res) => {
 });
 
 server.get('/dishes/:id', (req, res) => {
-  dishHelper.getDish(req.params.id)
+  helper.getDish(req.params.id)
     .then((dish) => {
       if (dish.length) {
         res.status(200).json(dish);
@@ -38,10 +38,10 @@ server.post('/dishes', (req, res) => {
   if (!req.body.name || Object.keys(req.body).length !== 1) {
     res.status(400).json({ error: 'the dish must have only a name field' });
   } else {
-    dishHelper.addDish(req.body)
+    helper.addDish(req.body)
       .then((id) => {
         // use id to retrieve dish and return it
-        dishHelper.getDish(id[0])
+        helper.getDish(id[0])
           .then((dish) => {
             res.status(200).json(dish);
           })
@@ -53,6 +53,16 @@ server.post('/dishes', (req, res) => {
         res.status(500).json({ error: `there was an error adding the dish: ${err}` });
       });
   }
+});
+
+server.get('/recipes', (req, res) => {
+  helper.getRecipes()
+    .then((list) => {
+      res.status(200).json(list);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: `there was an error retrieving the recipes: ${err}` });
+    });
 });
 
 module.exports = server;

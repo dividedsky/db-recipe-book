@@ -8,4 +8,6 @@ module.exports = {
 
   addDish: dish => db('dishes')
     .insert(dish),
+
+  getRecipes: () => db('recipes'),
 };
